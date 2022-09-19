@@ -15,7 +15,7 @@ const image = new Image() // mapa base do jogo
 image.src = "./assets/Mapa/polimon1.png";
 
 const playerImage = new Image() // imagem base do jogador
-playerImage.src = './assets/Personagens/player_idle_1-export.png'
+playerImage.src = './assets/Personagens/player_walk_down.png'
 playerImage.fillStyle = "transform: scale(10);";
 
 image.onload = () => {
