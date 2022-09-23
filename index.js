@@ -70,8 +70,20 @@ function animate(){
         playerImage.height // player 
     )
 
-    // MOVIMENTAÇÃO DO BACKGROUND (JOGADOR PARADO, ILUSÃO DE MOVIMENTO)
+    // MOVIMENTAÇÃO DO BACKGROUND 
+    // (JOGADOR PARADO, ILUSÃO DE MOVIMENTO, SEM CONTINUAR APOS APERTAR OUTRA TECLA, SEM DIAG)
+    /*
     // se move apenas em uma direção por vez: else if // diagonal: só if
+    if(keys.w.pressed && keys.s.pressed) background.position.y=background.position.y // para o boneco quando pressionado + de um botão
+    else if(keys.a.pressed && keys.d.pressed) background.position.x=background.position.x
+    else if(keys.w.pressed && lastKey==="w") background.position.y+=8 // pra cima
+    else if(keys.s.pressed && lastKey==="s") background.position.y-=8 // pra baixo 
+    else if(keys.a.pressed && lastKey==="a") background.position.x+=8 // pra esquerda 
+    else if(keys.d.pressed && lastKey==="d") background.position.x-=8 // pra direita 
+    
+    */
+    // MOVIMENTAÇÃO DO BACKGROUND 
+    // (JOGADOR PARADO, ILUSÃO DE MOVIMENTO, CONTINUA APOS APERTAR OUTRA TECLA)
     if(keys.w.pressed && keys.s.pressed) background.position.y=background.position.y // para o boneco quando pressionado + de um botão
     else if(keys.a.pressed && keys.d.pressed) background.position.x=background.position.x
     else if(keys.w.pressed) background.position.y+=8 // pra cima
@@ -81,7 +93,7 @@ function animate(){
     
 }
 animate() // chamada da função de animação
-
+let lastKey=""
 // CONTROLE DE INPUT
 window.addEventListener('keydown', e => {
     //console.log(e)
@@ -89,15 +101,19 @@ window.addEventListener('keydown', e => {
     switch (e.key) {
         case "w":
             keys.w.pressed=true
+            lastKey="w"
             break;
         case "s":
             keys.s.pressed=true
+            lastKey="s"
             break;
         case "a":
             keys.a.pressed=true
+            lastKey="a"
             break;
         case "d":
             keys.d.pressed=true
+            lastKey="d"
             break;
 
         default:
