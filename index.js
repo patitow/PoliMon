@@ -3,11 +3,22 @@ const canvas = document.querySelector("canvas")
 canvas.width = 1024
 canvas.height = 564
 
+var posx = -1060;
+var posy = -760;
+var tecla = ''
+
 const c = canvas.getContext("2d") // tipo de render da tela e pintura da tela em branco
 c.fillStyle = "white"
 c.fillRect(0, 0, canvas.width, canvas.height)
 // FIM DA TELA DE JOGO
 
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 
 // CLASSE SPRITE
 class Sprite {
@@ -33,8 +44,8 @@ playerImage.fillStyle = "transform: scale(10);";
 // DECLARAÇÃO DE SPRITES
 const background = new Sprite({
     position:{
-        x:-736,
-        y:-1024
+        x:-1060,
+        y:-760
     },
     image: backgroundImage
 })
@@ -86,10 +97,65 @@ function animate(){
     // (JOGADOR PARADO, ILUSÃO DE MOVIMENTO, CONTINUA APOS APERTAR OUTRA TECLA)
     if(keys.w.pressed && keys.s.pressed) background.position.y=background.position.y // para o boneco quando pressionado + de um botão
     else if(keys.a.pressed && keys.d.pressed) background.position.x=background.position.x
-    else if(keys.w.pressed) background.position.y+=8 // pra cima
-    else if(keys.s.pressed) background.position.y-=8 // pra baixo 
-    else if(keys.a.pressed) background.position.x+=8 // pra esquerda 
-    else if(keys.d.pressed) background.position.x-=8 // pra direita 
+    else if(tecla==''){ //tecla clicada
+    if(keys.w.pressed) {
+        tecla = 'w'
+        posy+=4
+        background.position.y=posy;
+         // pra cima 
+    }
+    else if(keys.s.pressed) {
+        tecla = 's'
+        posy-=4
+        background.position.y=posy;
+         // pra baixo 
+    }
+    else if(keys.a.pressed) {
+        tecla ='a'
+        posx+=4
+        background.position.x=32+posx;
+         // pra esquerda 
+    }
+    else if(keys.d.pressed) {
+        tecla = 'd'
+        posx-=4 
+        background.position.x=32+posx;
+         // pra direita
+    }
+    }   else { //ajuste para o próximo quadrado
+        if(tecla=='w'){
+            posy+=4
+            background.position.y=posy;
+            if(Math.round(posy/64)*64 == posy){
+                tecla=''
+            }
+        }
+        if(tecla=='s'){
+            posy-=4
+            background.position.y=posy;
+            if(Math.round(posy/64)*64 == posy){
+                tecla=''
+            }
+        }
+        if(tecla=='a'){
+            posx+=4
+            background.position.x= 32+posx;
+            if(Math.round(posx/64)*64 == posx){
+                tecla=''
+            }
+        }
+        if(tecla=='d'){
+            posx-=4
+            background.position.x= 32+posx;
+            if(Math.round(posx/64)*64 == posx){
+                tecla=''
+            }
+        }
+    }
+}
+
+function andar(){
+        background.position.y+=1
     
 }
 animate() // chamada da função de animação
