@@ -3,8 +3,8 @@ const canvas = document.querySelector("canvas")
 canvas.width = 1024
 canvas.height = 564
 
-var posx = -1060;
-var posy = -760;
+var posx = -17;
+var posy = -12;
 var tecla = ''
 
 const c = canvas.getContext("2d") // tipo de render da tela e pintura da tela em branco
@@ -44,8 +44,8 @@ playerImage.fillStyle = "transform: scale(10);";
 // DECLARAÇÃO DE SPRITES
 const background = new Sprite({
     position:{
-        x:-1060,
-        y:-760
+        x: posx*64+32,
+        y: posy*64
     },
     image: backgroundImage
 })
@@ -66,6 +66,8 @@ const keys = {
     },
     
 }
+
+var lastKey=""
 function animate(){
     window.requestAnimationFrame(animate)
     background.draw()
@@ -95,71 +97,53 @@ function animate(){
     */
     // MOVIMENTAÇÃO DO BACKGROUND 
     // (JOGADOR PARADO, ILUSÃO DE MOVIMENTO, CONTINUA APOS APERTAR OUTRA TECLA)
-    if(keys.w.pressed && keys.s.pressed) background.position.y=background.position.y // para o boneco quando pressionado + de um botão
-    else if(keys.a.pressed && keys.d.pressed) background.position.x=background.position.x
-    else if(tecla==''){ //tecla clicada
-    if(keys.w.pressed) {
-        tecla = 'w'
-        posy+=4
-        background.position.y=posy;
-         // pra cima 
+    if( (keys.w.pressed && keys.s.pressed) || (keys.a.pressed && keys.d.pressed)){
+        console.log('oi')
+        // para o boneco quando pressionado + de um botão
+    } else if(tecla==''){
+    if(keys.w.pressed && ( lastKey=='w'|| lastKey=='') ) {
+        posy+=1
+        tecla='w'
+         // pra cima  
     }
-    else if(keys.s.pressed) {
-        tecla = 's'
-        posy-=4
-        background.position.y=posy;
+    else if(keys.s.pressed && lastKey=='s') {
+        posy-=1
+        tecla='s'
          // pra baixo 
     }
-    else if(keys.a.pressed) {
-        tecla ='a'
-        posx+=4
-        background.position.x=32+posx;
+    else if(keys.a.pressed && lastKey=='a') {
+        posx+=1
+        tecla='a'
          // pra esquerda 
     }
-    else if(keys.d.pressed) {
-        tecla = 'd'
-        posx-=4 
-        background.position.x=32+posx;
+    else if(keys.d.pressed && lastKey=='d') {
+        posx-=1 
+        tecla='d'
          // pra direita
     }
-    }   else { //ajuste para o próximo quadrado
+    }
+     //ajuste para o próximo quadrado
+     if(background.position.y != posy*64 || background.position.x != 32 + posx*64){
         if(tecla=='w'){
-            posy+=4
-            background.position.y=posy;
-            if(Math.round(posy/64)*64 == posy){
-                tecla=''
-            }
+            background.position.y+=4
         }
         if(tecla=='s'){
-            posy-=4
-            background.position.y=posy;
-            if(Math.round(posy/64)*64 == posy){
-                tecla=''
-            }
+            background.position.y-=4
         }
         if(tecla=='a'){
-            posx+=4
-            background.position.x= 32+posx;
-            if(Math.round(posx/64)*64 == posx){
-                tecla=''
-            }
+            background.position.x+=4
         }
         if(tecla=='d'){
-            posx-=4
-            background.position.x= 32+posx;
-            if(Math.round(posx/64)*64 == posx){
-                tecla=''
-            }
+            background.position.x-=4
         }
-    }
+     }else{
+        tecla=''
+     }
+     console.log(lastKey)    
+     console.log(keys.w.pressed +'  '+ keys.s.pressed)    
 }
 
-function andar(){
-        background.position.y+=1
-    
-}
 animate() // chamada da função de animação
-let lastKey=""
 // CONTROLE DE INPUT
 window.addEventListener('keydown', e => {
     //console.log(e)
@@ -193,15 +177,43 @@ window.addEventListener('keyup', e => {
     switch (e.key) {
         case "w":
             keys.w.pressed=false
+            if(keys.a.pressed && keys.d.pressed){
+                tecla=''
+            }else if(keys.a.pressed){
+                lastKey='a'
+            }else if(keys.d.pressed){
+                lastKey='d'
+            }
             break;
         case "s":
             keys.s.pressed=false
+            if(keys.a.pressed && keys.d.pressed){
+                tecla=''
+            }else if(keys.a.pressed){
+                lastKey='a'
+            }else if(keys.d.pressed){
+                lastKey='d'
+            }
             break;
         case "a":
             keys.a.pressed=false
+            if(keys.w.pressed && keys.s.pressed){
+                tecla=''
+            }else if(keys.w.pressed){
+                lastKey='w'
+            }else if(keys.s.pressed){
+                lastKey='s'
+            }
             break;
         case "d":
             keys.d.pressed=false
+            if(keys.w.pressed && keys.s.pressed){
+                tecla=''
+            }else if(keys.w.pressed){
+                lastKey='w'
+            }else if(keys.s.pressed){
+                lastKey='s'
+            }
             break;
 
         default:
