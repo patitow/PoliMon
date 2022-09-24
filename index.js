@@ -98,7 +98,6 @@ function animate(){
     // MOVIMENTAÇÃO DO BACKGROUND 
     // (JOGADOR PARADO, ILUSÃO DE MOVIMENTO, CONTINUA APOS APERTAR OUTRA TECLA)
     if( (keys.w.pressed && keys.s.pressed) || (keys.a.pressed && keys.d.pressed)){
-        console.log('oi')
         // para o boneco quando pressionado + de um botão
     } else if(tecla==''){
     if(keys.w.pressed && ( lastKey=='w'|| lastKey=='') ) {
