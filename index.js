@@ -12,14 +12,6 @@ c.fillStyle = "white"
 c.fillRect(0, 0, canvas.width, canvas.height)
 // FIM DA TELA DE JOGO
 
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
-
 // CLASSE SPRITE
 class Sprite {
     constructor({position,velocity,image}) {
@@ -64,7 +56,6 @@ const keys = {
     d:{
         pressed: false
     },
-    
 }
 
 var lastKey=""
@@ -100,26 +91,26 @@ function animate(){
     if( (keys.w.pressed && keys.s.pressed) || (keys.a.pressed && keys.d.pressed)){
         // para o boneco quando pressionado + de um botão
     } else if(tecla==''){
-    if(keys.w.pressed && ( lastKey=='w'|| lastKey=='') ) {
-        posy+=1
-        tecla='w'
-         // pra cima  
-    }
-    else if(keys.s.pressed && lastKey=='s') {
-        posy-=1
-        tecla='s'
-         // pra baixo 
-    }
-    else if(keys.a.pressed && lastKey=='a') {
-        posx+=1
-        tecla='a'
-         // pra esquerda 
-    }
-    else if(keys.d.pressed && lastKey=='d') {
-        posx-=1 
-        tecla='d'
-         // pra direita
-    }
+        if(keys.w.pressed && lastKey=='w' ) {
+            posy+=1
+            tecla='w'
+            // pra cima  
+        }
+        else if(keys.s.pressed && lastKey=='s') {
+            posy-=1
+            tecla='s'
+            // pra baixo 
+        }
+        else if(keys.a.pressed && lastKey=='a') {
+            posx+=1
+            tecla='a'
+            // pra esquerda 
+        }
+        else if(keys.d.pressed && lastKey=='d') {
+            posx-=1 
+            tecla='d'
+            // pra direita
+        }
     }
      //ajuste para o próximo quadrado
      if(background.position.y != posy*64 || background.position.x != 32 + posx*64){
@@ -139,7 +130,7 @@ function animate(){
         tecla=''
      }
      console.log(lastKey)    
-     console.log(keys.w.pressed +'  '+ keys.s.pressed)    
+     console.log('w'+keys.w.pressed +' s'+ keys.s.pressed+' a'+keys.a.pressed +' d'+ keys.d.pressed)    
 }
 
 animate() // chamada da função de animação
@@ -182,6 +173,8 @@ window.addEventListener('keyup', e => {
                 lastKey='a'
             }else if(keys.d.pressed){
                 lastKey='d'
+            }else if(keys.s.pressed){
+                lastKey='s'
             }
             break;
         case "s":
@@ -192,6 +185,8 @@ window.addEventListener('keyup', e => {
                 lastKey='a'
             }else if(keys.d.pressed){
                 lastKey='d'
+            }else if(keys.w.pressed){
+                lastKey='w'
             }
             break;
         case "a":
@@ -202,6 +197,8 @@ window.addEventListener('keyup', e => {
                 lastKey='w'
             }else if(keys.s.pressed){
                 lastKey='s'
+            }else if(keys.d.pressed){
+                lastKey='d'
             }
             break;
         case "d":
@@ -212,9 +209,10 @@ window.addEventListener('keyup', e => {
                 lastKey='w'
             }else if(keys.s.pressed){
                 lastKey='s'
+            }else if(keys.a.pressed){
+                lastKey='a'
             }
             break;
-
         default:
             break;
     }
