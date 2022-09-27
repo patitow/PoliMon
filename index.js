@@ -1,15 +1,21 @@
 // TELA DO JOGO
-const canvas = document.querySelector("canvas")
+const canvas = document.querySelector("#canvasprincipal")
+const polimons = document.querySelector("#polimonbox")
+polimons.width = 256
+polimons.height = 768
 canvas.width = 1024
-canvas.height = 564
+canvas.height = 768
 
-var posx = -17;
-var posy = -12;
+var posx = -12;
+var posy = -14.5;
 var tecla = ''
 
 const c = canvas.getContext("2d") // tipo de render da tela e pintura da tela em branco
 c.fillStyle = "white"
 c.fillRect(0, 0, canvas.width, canvas.height)
+const pb = polimons.getContext("2d") // tipo de render da tela e pintura da tela em branco
+pb.fillStyle = "white"
+pb.fillRect(0, 0, polimons.width, polimons.height)
 // FIM DA TELA DE JOGO
 
 // CLASSE SPRITE
@@ -26,11 +32,26 @@ class Sprite {
 
 // DECLARAÇÃO DE IMAGENS
 const backgroundImage = new Image() // mapa base do jogo
-backgroundImage     .src = "./assets/Mapa/polimon1.png";
-
+backgroundImage.src = "./assets/Mapa/polimon1.png";
 const playerImage = new Image() // imagem base do jogador
 playerImage.src = './assets/Personagens/player_walk_down.png'
 playerImage.fillStyle = "transform: scale(10);";
+
+// PoliBox:
+const polimonbox1 = new Image() // polimon1
+polimonbox1.src = "./assets/Personagens/npc_idle_1-export.png";
+const polimonbox2 = new Image() // polimon2
+polimonbox2.src = "./assets/Personagens/npc_idle_1-export.png";
+const polimonbox3 = new Image() // polimon3
+polimonbox3.src = "./assets/Personagens/npc_idle_1-export.png";
+const polimonbox4 = new Image() // polimon4
+polimonbox4.src = "./assets/Personagens/npc_idle_1-export.png";
+const polimonbox5 = new Image() // polimon5
+polimonbox5.src = "./assets/Personagens/npc_idle_1-export.png";
+const polimonbox6 = new Image() // polimon6
+polimonbox6.src = "./assets/Personagens/npc_idle_1-export.png";
+
+
 // FIM DA DECLARAÇÃO DE IMAGENS
 
 // DECLARAÇÃO DE SPRITES
@@ -73,6 +94,37 @@ function animate(){
         playerImage.width / 3, // player 
         playerImage.height // player 
     )
+    pb.drawImage(
+        polimonbox1,
+        1.5*polimons.width / 4, // meio da tela ???
+        1*polimonbox.height/7 // polimonster 1
+    )
+    pb.drawImage(
+        polimonbox2,
+        1.5*polimons.width / 4, // meio da tela ???
+        2*polimonbox.height/7
+    )
+    pb.drawImage(
+        polimonbox3,
+        1.5*polimons.width / 4, // meio da tela ???
+        3*polimonbox.height/7
+    )
+    pb.drawImage(
+        polimonbox4,
+        1.5*polimons.width / 4, // meio da tela ???
+        4*polimonbox.height/7
+    )
+    pb.drawImage(
+        polimonbox5,
+        1.5*polimons.width / 4, // meio da tela ???
+        5*polimonbox.height/7
+    )
+    pb.drawImage(
+        polimonbox6,
+        1.5*polimons.width / 4, // meio da tela ???
+        6*polimonbox.height/7
+    )
+    
 
     // MOVIMENTAÇÃO DO BACKGROUND 
     // (JOGADOR PARADO, ILUSÃO DE MOVIMENTO, SEM CONTINUAR APOS APERTAR OUTRA TECLA, SEM DIAG)
@@ -129,15 +181,15 @@ function animate(){
      }else{
         tecla=''
      }
-     console.log(lastKey)    
-     console.log('w'+keys.w.pressed +' s'+ keys.s.pressed+' a'+keys.a.pressed +' d'+ keys.d.pressed)    
+     //console.log(lastKey)    
+     //console.log('w'+keys.w.pressed +' s'+ keys.s.pressed+' a'+keys.a.pressed +' d'+ keys.d.pressed)    
 }
 
 animate() // chamada da função de animação
 // CONTROLE DE INPUT
 window.addEventListener('keydown', e => {
     //console.log(e)
-    console.log(keys)
+    //console.log(keys)
     switch (e.key) {
         case "w":
             keys.w.pressed=true
